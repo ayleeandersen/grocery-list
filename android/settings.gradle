@@ -1,0 +1,3 @@
+rootProject.name = 'AndersenAyleeAssn6android'
+
+include ':app'
