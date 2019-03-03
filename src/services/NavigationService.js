@@ -9,8 +9,7 @@ import {
 import HomeScreen from '../screens/HomeScreen';
 
 let NavigationService = class NavigationService {
-    constructor() {
-    }
+    constructor() {}
 
     getTopNavigator() {
         return (
@@ -22,10 +21,18 @@ let NavigationService = class NavigationService {
         );
     }
 
-    // Navigate to any screen
     navigate(routeName, params) {
         this._navigator.dispatch(
             NavigationActions.navigate({
+                routeName,
+                params,
+            })
+        );
+    }
+
+    push(routeName, params) {
+        this._navigator.dispatch(
+            NavigationActions.push({
                 routeName,
                 params,
             })

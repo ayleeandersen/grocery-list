@@ -1,7 +1,13 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { createLogger } from 'redux-logger'
 
 import counterReducer from './reducers/counterReducer';
 
-const store = createStore(counterReducer);
+const logger = createLogger({
+    timestamp: true,
+    diff: true
+  });
+
+const store = createStore(counterReducer, applyMiddleware(logger));
 
 export default store;

@@ -6,17 +6,21 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
   TouchableOpacity,
   View
 } from 'react-native';
-import navigationService from '../services/NavigationService';
+import {
+    Button,
+    Text,
+} from "native-base";
+import styles from '../MainStyles';
 
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
-        title: 'Home'
+        title: 'Home',
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.headerTitleStyle,
     }
 
     constructor(props) {
@@ -25,15 +29,13 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.body}>
                 <Text>
                     Welcome to The Home Screen
-            </Text>
-                <TouchableOpacity>
-                    <Text>
-                        Go to Screen One
-                    </Text>
-                </TouchableOpacity>
+                </Text>
+                <Button bordered>
+                    <Text>Hello There</Text>
+                </Button>
             </View>
         );
     }
