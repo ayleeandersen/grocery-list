@@ -6,17 +6,19 @@
 
 import React, { Component } from 'react';
 import {
-  TouchableOpacity,
   View
 } from 'react-native';
 import {
     Button,
     Text,
 } from "native-base";
+import { connect } from 'react-redux';
+
+import { increment } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
     static navigationOptions = {
         title: 'Home',
         headerStyle: styles.headerStyle,
@@ -33,10 +35,26 @@ export default class HomeScreen extends Component {
                 <Text>
                     Welcome to The Home Screen
                 </Text>
-                <Button bordered>
+                <Text>{this.props.count}</Text>
+                <Button bordered onPress={() => this.props.dispatchIncrement(1)}>
                     <Text>Hello There</Text>
                 </Button>
             </View>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    console.log("dispatch");
+    return {
+        dispatchIncrement: (val) => dispatch(increment(val)),
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        count: state.count
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
