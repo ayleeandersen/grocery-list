@@ -14,7 +14,8 @@
     "react-navigation": "3.3.2",
     "react-redux": "6.0.1",
     "redux": "4.0.1",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.6.0"
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
@@ -27,6 +28,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["assets/fonts/Raleway"]
-   }
+    "assets": [
+      "assets/fonts/Raleway"
+    ]
+  }
 }

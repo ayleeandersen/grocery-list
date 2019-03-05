@@ -1,13 +1,18 @@
-import { INCREMENT } from '../actions/constants';
+import { INCREMENT, INITIALIZE, NO_INITIALIZE } from '../actions/constants';
 
-let initialState = {   
-    count: 10
+let initialState = {
+    isLoading: true,   
+    count: 10,
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
+        case NO_INITIALIZE:
+            return { ...state, isLoading: false};
+        case INITIALIZE:
+            return { count: action.val, isLoading: false };
         case INCREMENT:
-            return { count: state.count + action.val };
+            return { ...state, count: state.count + action.val };
         default: 
             return state;
     }

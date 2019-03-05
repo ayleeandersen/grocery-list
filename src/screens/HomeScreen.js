@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import {
     Button,
+    Spinner,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
 
-import { increment } from '../redux/actions/actions';
+import { increment, initialize } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
@@ -27,6 +28,7 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.props.dispatchInitialize();
     }
 
     render() {
@@ -39,21 +41,23 @@ class HomeScreen extends Component {
                 <Button bordered onPress={() => this.props.dispatchIncrement(1)}>
                     <Text>Hello There</Text>
                 </Button>
+                {this.props.isLoading && <Spinner color='red' />}
             </View>
         );
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    console.log("dispatch");
     return {
         dispatchIncrement: (val) => dispatch(increment(val)),
+        dispatchInitialize: () => dispatch(initialize()),
     };
 }
 
 function mapStateToProps(state) {
     return {
-        count: state.count
+        count: state.count,
+        isLoading: state.isLoading
     };
 }
 
