@@ -29,7 +29,8 @@ export default (variables /*: * */ = variable) => {
   };
   const primaryCommon = {
     "NativeBase.Text": {
-      color: variables.btnPrimaryBg
+      color: variables.btnPrimaryBg,
+      fontFamily: 'Raleway Medium',
     },
     "NativeBase.Icon": {
       color: variables.btnPrimaryBg
@@ -156,13 +157,14 @@ export default (variables /*: * */ = variable) => {
         }
       },
       ...primaryCommon,
-      borderWidth: variables.borderWidth * 2,
+      // borderWidth: variables.borderWidth * 2,
+      borderWidth: variables.borderWidth * 7,
       elevation: null,
       shadowColor: null,
       shadowOffset: null,
       shadowOpacity: null,
       shadowRadius: null,
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
     },
 
     ".dark": {

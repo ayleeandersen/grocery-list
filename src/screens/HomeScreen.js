@@ -41,7 +41,7 @@ class HomeScreen extends Component {
                 <Button bordered onPress={() => this.props.dispatchIncrement(1)}>
                     <Text>Hello There</Text>
                 </Button>
-                {this.props.isLoading && <Spinner color='red' />}
+                {this.props.isLoading && <Spinner/>}
             </View>
         );
     }

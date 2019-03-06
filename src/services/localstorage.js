@@ -2,7 +2,8 @@ import { AsyncStorage } from 'react-native';
 
 class LocalStorage {
 	constructor() {
-        // TODO: remove: AsyncStorage.clear();
+        // TODO: remove: 
+        // AsyncStorage.clear();
         AsyncStorage.getAllKeys()
         .then(result => {
             console.log("keys", result);
