@@ -69,7 +69,7 @@ class AddListScreen extends Component {
                             <Button dark bordered style={styles.iconSelectionButton}
                             onPress={() => navigationService.pop()}><Text>Cancel</Text></Button>
                             <Button dark style={styles.iconSelectionButton}
-                            onPress={() => this.submit()}><Text>Submit</Text></Button>
+                            onPress={() => this.submit()}><Text>Done</Text></Button>
                         </View>
                     </Form>
                 </Content>
@@ -94,7 +94,7 @@ class AddListScreen extends Component {
             alert("Please make sure the list has a name and an icon has been selected.");
         } else {
             this.props.dispatchCreateNewList(this.state.listNameText, this.state.iconName);
-            navigationService.navigate('HomeScreen', {from: 'AddListScreen'});
+            navigationService.navigate('Home', {from: 'AddListScreen'});
         }
     }
 }
