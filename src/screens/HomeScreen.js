@@ -78,8 +78,8 @@ class HomeScreen extends Component {
                         </CardItem>
                     </ListItem>
                 }
-                renderLeftHiddenRow={data =>
-                    <Button full warning onPress={() => alert("edit")}>
+                renderLeftHiddenRow={(data, secId, rowId) =>
+                    <Button full warning onPress={() => this.editRow(data, rowId)}>
                         <Icon active name="edit" type="MaterialIcons"/>
                     </Button>
                 }
@@ -90,6 +90,10 @@ class HomeScreen extends Component {
                 }
             />
         );
+    }
+
+    editRow(data, rowId) {
+        navigationService.push('AddListScreen', {from: 'HomeScreen', data: data, index: rowId});
     }
 
     deleteRow(secId, rowId, rowMap) {
