@@ -6,26 +6,27 @@
 
 import React, { Component } from 'react';
 import {
-    TouchableOpacity,
-    View
+    ListView,
 } from 'react-native';
 import {
+    Body,
     Button,
+    CardItem,
     Container,
     Content,
     Icon,
+    Left,
     List,
+    ListItem,
     Spinner,
-    SwipeRow,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { increment, initialize } from '../redux/actions/actions';
+import { initialize } from '../redux/actions/actions';
 import styles from '../MainStyles';
 import dataController from '../services/datacontroller';
-
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -44,10 +45,12 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.props.dispatchInitialize();
     }
 
     render() {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         return (
             <Container>
                 <Content>
@@ -59,23 +62,32 @@ class HomeScreen extends Component {
 
     _renderList() {
         return (
-            <SwipeRow 
+            <List
                 leftOpenValue={75}
                 rightOpenValue={-75}
-                left={
-                <Button success onPress={() => alert('Edit')}>
-                    <Icon active name="edit" type="MaterialIcons"/>
-                </Button>
+                dataSource={this.ds.cloneWithRows(this.props.lists)}
+                renderRow={data =>
+                    <ListItem>
+                        <CardItem>
+                            <Left>
+                                <Icon active style={styles.listIcon} name={data.icon} type="FontAwesome"/>
+                                <Body>
+                                    <Text style={styles.listText}>{data.name}</Text>
+                                    <Text note style={styles.listTextNote}>{data.date}</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                    </ListItem>
                 }
-                body={
-                <List>
-                    <Text>SwipeRow Body Text</Text>
-                </List>
+                renderLeftHiddenRow={data =>
+                    <Button full warning onPress={() => alert("edit")}>
+                        <Icon active name="edit" type="MaterialIcons"/>
+                    </Button>
                 }
-                right={
-                <Button danger onPress={() => alert('Trash')}>
-                    <Icon active name="trash" />
-                </Button>
+                renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+                    <Button full danger onPress={()=> alert("trash")}>
+                        <Icon active name="trash" />
+                    </Button>
                 }
             />
         );

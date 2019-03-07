@@ -15,6 +15,18 @@ export default StyleSheet.create({
         alignItems: 'center',
         fontFamily: 'Raleway'
     },
+    //List
+    listIcon: {
+        color: '#013549',
+        margin: 10,
+        fontSize: 30,
+    },  
+    listText: {
+        fontSize: 20,
+    },
+    listTextNote: {
+        fontSize: 12
+    },
     // Form
     inputField: {
         fontSize: 20,

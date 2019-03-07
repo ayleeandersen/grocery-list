@@ -16,11 +16,7 @@ import {
     Content,
     Form,
     Icon,
-    Input,
     Item,
-    List,
-    Spinner,
-    SwipeRow,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
@@ -94,6 +90,7 @@ class AddListScreen extends Component {
             alert("Please make sure the list has a name and an icon has been selected.");
         } else {
             this.props.dispatchCreateNewList(this.state.listNameText, this.state.iconName);
+            //TODO: should navigate to sublistscreen instead of home :)
             navigationService.navigate('Home', {from: 'AddListScreen'});
         }
     }
