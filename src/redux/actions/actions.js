@@ -1,4 +1,4 @@
-import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST } from './constants';
+import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST, UPDATE_ITEM } from './constants';
 import store from '../ReduxStore';
 import dataController from '../../services/datacontroller';
 
@@ -27,7 +27,20 @@ export function createNewList(name, iconName) {
             resolve({type: CREATE_NEW_LIST, val: list});
         })
         .catch(error => {
-            console.log("error");
+            console.log("error ", error);
+            reject(error);
+        })
+    })
+}
+
+export function updateItem(key, value) {
+    return new Promise((resolve, reject) => {
+        dataController.addItem(key, value)
+        .then(() => {
+            resolve({type: UPDATE_ITEM, val: value})
+        })
+        .catch(error => {
+            console.log("error ", error);
             reject(error);
         })
     })

@@ -24,9 +24,8 @@ import {
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { initialize } from '../redux/actions/actions';
+import { initialize, createNewList, updateItem } from '../redux/actions/actions';
 import styles from '../MainStyles';
-import dataController from '../services/datacontroller';
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -85,18 +84,26 @@ class HomeScreen extends Component {
                     </Button>
                 }
                 renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                    <Button full danger onPress={()=> alert("trash")}>
+                    <Button full danger onPress={()=> this.deleteRow(secId, rowId, rowMap)}>
                         <Icon active name="trash" />
                     </Button>
                 }
             />
         );
     }
+
+    deleteRow(secId, rowId, rowMap) {
+        rowMap[`${secId}${rowId}`].props.closeRow();
+        const newData = [...this.props.lists];
+        newData.splice(rowId, 1);
+        this.props.dispatchUpdateItem('lists', newData);
+      }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         dispatchInitialize: () => dispatch(initialize()),
+        dispatchUpdateItem: (key, value) => dispatch(updateItem(key, value)),
     };
 }
 

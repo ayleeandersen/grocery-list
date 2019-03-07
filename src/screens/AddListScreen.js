@@ -43,6 +43,10 @@ class AddListScreen extends Component {
         }
     }
 
+    componentDidMount() {
+        //use this to set the values of state to the props that are passed in.
+    }
+
     render() {
         return (
             <Container>

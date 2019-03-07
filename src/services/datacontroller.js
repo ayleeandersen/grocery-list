@@ -16,10 +16,6 @@ class DataController {
         })
     }
 
-    changeItem(key, value) {
-        this.addItem(key, value);
-    }
-
     getItem(key) {
         return new Promise((resolve, reject) => {
             localStorage.get(key)
