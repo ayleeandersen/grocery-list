@@ -110,10 +110,13 @@ export default {
   // brandPrimary: platform === "ios" ? "#805815" : "#3F51B5",
   brandPrimary: "#B42203",
   brandInfo: "#554B00",
-  brandSuccess: "#D4B06A",
-  brandDanger: "#615192",
+  // brandSuccess: "#D4B06A",
+  brandSuccess: "#91CC44",
+  // brandDanger: "#615192",
+  brandDanger: "#E0644A",
   brandWarning: "#3D1255",
-  brandDark: "#000",
+  // brandDark: "#000",
+  brandDark: "#013549",
   brandLight: "#f4f4f4",
 
   //Container

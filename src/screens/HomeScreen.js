@@ -6,24 +6,40 @@
 
 import React, { Component } from 'react';
 import {
-  View
+    TouchableOpacity,
+    View
 } from 'react-native';
 import {
     Button,
+    Container,
+    Content,
+    Icon,
+    List,
     Spinner,
+    SwipeRow,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
 
+import navigationService from '../services/NavigationService';
 import { increment, initialize } from '../redux/actions/actions';
 import styles from '../MainStyles';
+import dataController from '../services/datacontroller';
 
 
 class HomeScreen extends Component {
     static navigationOptions = {
-        title: 'Home',
+        title: 'Grocerying',
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.headerTitleStyle,
+        headerRight: (
+            <Button transparent light
+              onPress={() => navigationService.push('AddListScreen', {from: 'HomeScreen'})}
+              title="AddList"
+            >
+                <Icon active name="add" type="MaterialIcons"/>
+            </Button>
+        ),
     }
 
     constructor(props) {
@@ -33,31 +49,49 @@ class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={styles.body}>
-                <Text>
-                    Welcome to The Home Screen
-                </Text>
-                <Text>{this.props.count}</Text>
-                <Button bordered onPress={() => this.props.dispatchIncrement(1)}>
-                    <Text>Hello There</Text>
+            <Container>
+                <Content>
+                    {this.props.isLoading ? <Spinner/> : this._renderList()}
+                </Content>
+            </Container>
+        );
+    }
+
+    _renderList() {
+        return (
+            <SwipeRow 
+                leftOpenValue={75}
+                rightOpenValue={-75}
+                left={
+                <Button success onPress={() => alert('Edit')}>
+                    <Icon active name="edit" type="MaterialIcons"/>
                 </Button>
-                {this.props.isLoading && <Spinner/>}
-            </View>
+                }
+                body={
+                <List>
+                    <Text>SwipeRow Body Text</Text>
+                </List>
+                }
+                right={
+                <Button danger onPress={() => alert('Trash')}>
+                    <Icon active name="trash" />
+                </Button>
+                }
+            />
         );
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchIncrement: (val) => dispatch(increment(val)),
         dispatchInitialize: () => dispatch(initialize()),
     };
 }
 
 function mapStateToProps(state) {
     return {
-        count: state.count,
-        isLoading: state.isLoading
+        isLoading: state.isLoading,
+        lists: state.lists,
     };
 }
 

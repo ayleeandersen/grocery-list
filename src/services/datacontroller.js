@@ -11,6 +11,7 @@ class DataController {
             })
             .catch(error => {
                 console.log('error: ', error)
+                reject(error);
             })
         })
     }
@@ -25,7 +26,9 @@ class DataController {
             .then(result => {
                 resolve(result);
             })
-            .catch(error => reject(error))
+            .catch(error => {
+                reject(error)
+            })
         })
     }
 

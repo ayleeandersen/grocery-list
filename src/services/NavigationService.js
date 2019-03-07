@@ -3,10 +3,12 @@ import React from 'react';
 import {
     createAppContainer,
     createStackNavigator,
-    NavigationActions
+    NavigationActions,
+    StackActions,
 } from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
+import AddListScreen from '../screens/AddListScreen';
 
 let NavigationService = class NavigationService {
     constructor() {}
@@ -32,10 +34,16 @@ let NavigationService = class NavigationService {
 
     push(routeName, params) {
         this._navigator.dispatch(
-            NavigationActions.push({
+            StackActions.push({
                 routeName,
                 params,
             })
+        );
+    }
+
+    pop() {
+        this._navigator.dispatch(
+            StackActions.pop()
         );
     }
 }
@@ -46,6 +54,7 @@ export default navigationService;
 const Root = createStackNavigator(
     {
         Home: HomeScreen,
+        AddListScreen: AddListScreen,
     },
     {
         initialRouteName: 'Home'

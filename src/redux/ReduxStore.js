@@ -7,7 +7,6 @@ import promiseMiddleware from 'redux-promise';
 
 const logger = createLogger({
     timestamp: true,
-    diff: true
   });
 
 const store = createStore(listReducer, applyMiddleware(logger, promiseMiddleware));

@@ -1,8 +1,8 @@
-import { INCREMENT, INITIALIZE, NO_INITIALIZE } from '../actions/constants';
+import { INCREMENT, INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST } from '../actions/constants';
 
 let initialState = {
     isLoading: true,   
-    count: 10,
+    lists: [],
 };
 
 export default function(state = initialState, action) {
@@ -10,9 +10,9 @@ export default function(state = initialState, action) {
         case NO_INITIALIZE:
             return { ...state, isLoading: false};
         case INITIALIZE:
-            return { count: action.val, isLoading: false };
-        case INCREMENT:
-            return { ...state, count: state.count + action.val };
+            return { ...state, lists: action.val, isLoading: false };
+        case CREATE_NEW_LIST:
+            return { ...state, lists: state.lists.concat(action.val) }
         default: 
             return state;
     }
