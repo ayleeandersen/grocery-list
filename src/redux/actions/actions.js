@@ -1,4 +1,4 @@
-import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST, UPDATE_ITEM, UPDATE_LIST_ITEM_AT_INDEX, TOGGLE_DONE } from './constants';
+import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST, UPDATE_ITEM, UPDATE_LIST_ITEM_AT_INDEX, TOGGLE_DONE, UPDATE_ITEM_NAME } from './constants';
 import store from '../ReduxStore';
 import dataController from '../../services/datacontroller';
 
@@ -78,6 +78,21 @@ export function toggleDone(listIndex, itemIndex) {
         dataController.addItem('lists', newList)
         .then(() => {
             resolve({type: TOGGLE_DONE, val: newList});
+        })
+        .catch(error => {
+            console.log("error ", error);
+            reject(error);
+        })
+    })
+}
+
+export function updateItemName(listIndex, itemIndex, newName) {
+    let newList = store.getState().lists;
+    newList[listIndex].items[itemIndex].name = newName;
+    return new Promise((resolve, reject) => {
+        dataController.addItem('lists', newList)
+        .then(() => {
+            resolve({type: UPDATE_ITEM_NAME, val: newList});
         })
         .catch(error => {
             console.log("error ", error);

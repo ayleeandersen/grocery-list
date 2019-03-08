@@ -20,7 +20,7 @@ import {
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { updateListItemAtIndex } from '../redux/actions/actions';
+import { updateListItemAtIndex, updateItemName } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
@@ -46,6 +46,11 @@ class AddItemScreen extends Component {
             this.setState({listIndex: this.props.navigation.getParam('index')});
         } else {
             this.setState({listIndex: this.props.lists.length-1});
+        }
+
+        let data = this.props.navigation.getParam('data');
+        if (data) {
+            this.setState({itemText: data.name, listIndex: this.props.navigation.getParam('listIndex')});
         }
     }
 
@@ -79,11 +84,18 @@ class AddItemScreen extends Component {
         if (this.state.itemText.length === 0) {
             alert("Please make sure the item has a name.");
         } else {
-            this.props.dispatchUpdateListItemAtIndex(this.state.listIndex, this.props.lists[this.state.listIndex], {item: {name: this.state.itemText, done: false}});
-            if (this.props.navigation.getParam('index')) {
-                navigationService.navigate('SubListScreen', {from: 'AddItemScreen', index: this.props.navigation.getParam('index')});
+            if (this.props.navigation.getParam('data')) {
+                this.props.dispatchUpdateItemName(this.state.listIndex, this.props.navigation.getParam('itemIndex'), this.state.itemText);
+
+                navigationService.navigate('SubListScreen', {from: 'AddItemScreen', index: this.state.listIndex});
             } else {
-                navigationService.navigate('SubListScreen', {from: 'AddItemScreen'});
+                this.props.dispatchUpdateListItemAtIndex(this.state.listIndex, this.props.lists[this.state.listIndex], {item: {name: this.state.itemText, done: false}});
+
+                if (this.props.navigation.getParam('index')) {
+                    navigationService.navigate('SubListScreen', {from: 'AddItemScreen', index: this.props.navigation.getParam('index')});
+                } else {
+                    navigationService.navigate('SubListScreen', {from: 'AddItemScreen'});
+                }
             }
         }
     }
@@ -92,6 +104,7 @@ class AddItemScreen extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchUpdateListItemAtIndex: (index, oldData, newData) => dispatch(updateListItemAtIndex(index, oldData, newData)),
+        dispatchUpdateItemName: (listIndex, itemIndex, newName) => dispatch(updateItemName(listIndex, itemIndex, newName)),
     };
 }
 

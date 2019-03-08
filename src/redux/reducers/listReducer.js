@@ -1,4 +1,4 @@
-import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST, UPDATE_ITEM, UPDATE_LIST_ITEM_AT_INDEX, TOGGLE_DONE } from '../actions/constants';
+import { INITIALIZE, NO_INITIALIZE, CREATE_NEW_LIST, UPDATE_ITEM, UPDATE_LIST_ITEM_AT_INDEX, TOGGLE_DONE, UPDATE_ITEM_NAME } from '../actions/constants';
 
 let initialState = {
     isLoading: true,   
@@ -18,6 +18,8 @@ export default function(state = initialState, action) {
         case UPDATE_ITEM:
             return { ...state, lists: action.val };
         case TOGGLE_DONE:
+            return { ...state, lists: action.val };
+        case UPDATE_ITEM_NAME:
             return { ...state, lists: action.val };
         default: 
             return state;

@@ -82,7 +82,7 @@ class SubListScreen extends Component {
                         dataSource={this.ds.cloneWithRows(this.props.lists[this.state.listIndex].items)}
                         renderRow={(data, secId, rowId) =>
                             <ListItem onPress={() => this.selectRow(data, rowId)}>
-                                <CardItem style={data.done ? {backgroundColor: '#e3e4e5'} : {}}>
+                                <CardItem style={data.done ? {backgroundColor: '#f2f3f4'} : {}}>
                                     <Left>
                                         <Text style={styles.listText}>{data.name}</Text>
                                     </Left>
@@ -116,7 +116,7 @@ class SubListScreen extends Component {
     }
 
     editRow(data, rowId) {
-        alert("Editing ", rowId);
+        navigationService.push('AddItemScreen', {from: 'HomeScreen', data: data, listIndex: this.state.listIndex, itemIndex: rowId});
     }
 
     deleteRow(secId, rowId, rowMap) {
