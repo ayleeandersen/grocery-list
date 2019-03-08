@@ -39,6 +39,20 @@ class SubListScreen extends Component {
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,
             headerTintColor: '#f4f4f4',
+            headerRight: (
+                <Button transparent light
+                  onPress={() => {
+                        if (navigation.getParam('from') === 'AddListScreen') {
+                            navigationService.push('AddItemScreen', {from: 'SubListScreen'});
+                        } else {
+                            navigationService.push('AddItemScreen', {from: 'SubListScreen', index: navigation.getParam('index')});
+                        }
+                  }}
+                  title="AddList"
+                >
+                    <Icon active name="add" type="MaterialIcons"/>
+                </Button>
+            ),
         };
     }
 
@@ -55,8 +69,6 @@ class SubListScreen extends Component {
         } else {
             viewList = this.props.lists[this.props.navigation.getParam('index')].items;
         }
-        //TODO:if it comes from AddListScreen, update last element
-        //TODO:if it comes from homescreen, get index
         return (
             <Container>
                 <Content>
@@ -64,8 +76,8 @@ class SubListScreen extends Component {
                         leftOpenValue={75}
                         rightOpenValue={-75}
                         dataSource={this.ds.cloneWithRows(viewList)}
-                        renderRow={data =>
-                            <ListItem onPress={(data, secId, rowId) => this.selectRow(data, rowId)}>
+                        renderRow={(data, secId, rowId) =>
+                            <ListItem onPress={() => this.selectRow(data, rowId)}>
                                 <CardItem>
                                     <Left>
                                         <Body>
