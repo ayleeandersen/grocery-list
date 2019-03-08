@@ -65,8 +65,8 @@ class HomeScreen extends Component {
                 leftOpenValue={75}
                 rightOpenValue={-75}
                 dataSource={this.ds.cloneWithRows(this.props.lists)}
-                renderRow={data =>
-                    <ListItem>
+                renderRow={(data, secId, rowId) =>
+                    <ListItem onPress={() => this.selectRow(data, rowId)}>
                         <CardItem>
                             <Left>
                                 <Icon active style={styles.listIcon} name={data.icon} type="FontAwesome"/>
@@ -92,6 +92,10 @@ class HomeScreen extends Component {
         );
     }
 
+    selectRow(data, rowId) {
+        navigationService.push('SubListScreen', {from: 'HomeScreen', data: data, index: rowId});
+    }
+
     editRow(data, rowId) {
         navigationService.push('AddListScreen', {from: 'HomeScreen', data: data, index: rowId});
     }
@@ -101,7 +105,7 @@ class HomeScreen extends Component {
         const newData = [...this.props.lists];
         newData.splice(rowId, 1);
         this.props.dispatchUpdateItem('lists', newData);
-      }
+    }
 }
 
 function mapDispatchToProps(dispatch) {

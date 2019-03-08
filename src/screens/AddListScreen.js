@@ -44,7 +44,6 @@ class AddListScreen extends Component {
     }
 
     componentDidMount() {
-        //TODO: should update instead of create new one.
         if(this.props.navigation.getParam('data')) {
             let data = this.props.navigation.getParam('data');
             this.setState({listNameText: data.name, iconName: data.icon});
@@ -61,8 +60,8 @@ class AddListScreen extends Component {
                                 placeholder="List Name..." 
                                 onChangeText={(listNameText) => this.setState({listNameText})}
                                 value={this.state.listNameText}
-                                autoFocus={true}
                                 style={styles.inputField}
+                                autoFocus={true}
                             />
                         </Item>
                         <View style={styles.iconSelectionField}>
@@ -102,11 +101,11 @@ class AddListScreen extends Component {
                     parseInt(this.props.navigation.getParam('index')), this.props.navigation.getParam('data'), 
                     {name: this.state.listNameText, icon: this.state.iconName}
                 );
+                navigationService.navigate('Home', {from: 'AddListScreen'});
             } else {
                 this.props.dispatchCreateNewList(this.state.listNameText, this.state.iconName);
+                navigationService.replace('SubListScreen', {from: 'AddListScreen', data: {name: this.state.listNameText, icon: this.state.iconName}});
             }
-            //TODO: should navigate to sublistscreen instead of home :)
-            navigationService.navigate('Home', {from: 'AddListScreen'});
         }
     }
 }
@@ -118,4 +117,10 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(AddListScreen);
+function mapStateToProps(state) {
+    return {
+        lists: state.lists,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddListScreen);

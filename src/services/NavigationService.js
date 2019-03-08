@@ -9,6 +9,7 @@ import {
 
 import HomeScreen from '../screens/HomeScreen';
 import AddListScreen from '../screens/AddListScreen';
+import SubListScreen from '../screens/SubListScreen';
 
 let NavigationService = class NavigationService {
     constructor() {}
@@ -46,6 +47,15 @@ let NavigationService = class NavigationService {
             StackActions.pop()
         );
     }
+
+    replace(routeName, params) {
+        this._navigator.dispatch(
+            StackActions.replace({
+                routeName,
+                params,
+            })
+        )
+    }
 }
 
 const navigationService = new NavigationService();
@@ -55,6 +65,7 @@ const Root = createStackNavigator(
     {
         Home: HomeScreen,
         AddListScreen: AddListScreen,
+        SubListScreen: SubListScreen,
     },
     {
         initialRouteName: 'Home'
