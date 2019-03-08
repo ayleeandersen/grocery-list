@@ -24,7 +24,7 @@ import {
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { toggleDone, updateListItemAtIndex } from '../redux/actions/actions';
+import { toggleDone, updateItem } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
@@ -69,7 +69,6 @@ class SubListScreen extends Component {
     }
 
     render() {
-        console.log(this.state);
         if (this.state.listIndex === null) {
             return <Spinner/>;
         }
@@ -101,7 +100,7 @@ class SubListScreen extends Component {
                             </Button>
                         }
                         renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                            <Button full danger onPress={()=> this.deleteRow(secId, rowId, rowMap, viewList)}>
+                            <Button full danger onPress={()=> this.deleteRow(secId, rowId, rowMap)}>
                                 <Icon active name="trash" />
                             </Button>
                         }
@@ -120,14 +119,12 @@ class SubListScreen extends Component {
         alert("Editing ", rowId);
     }
 
-    deleteRow(secId, rowId, rowMap, viewList) {
-        alert("Deleting ", rowId);
-        // rowMap[`${secId}${rowId}`].props.closeRow();
-        // const newData = [...viewList];
-        // newData.splice(rowId, 1);
-        //TODO: fix this one
-        // this.props.dispatchUpdateItem('lists', newData);
-      }
+    deleteRow(secId, rowId, rowMap) {
+        rowMap[`${secId}${rowId}`].props.closeRow();
+        const newData = [...this.props.lists];
+        newData[this.state.listIndex].items.splice(rowId, 1);
+        this.props.dispatchUpdateItem('lists', newData);
+    }
 }
 
 function mapDispatchToProps(dispatch) {
