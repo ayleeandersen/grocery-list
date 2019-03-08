@@ -7,9 +7,6 @@
 import React, { Component } from 'react';
 import {
     ListView,
-    TouchableOpacity,
-    TextInput,
-    View
 } from 'react-native';
 import {
     Body,
@@ -17,12 +14,10 @@ import {
     CardItem,
     Container,
     Content,
-    Form,
     Icon,
     Left,
     List,
     ListItem,
-    Item,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
@@ -42,10 +37,10 @@ class SubListScreen extends Component {
             headerRight: (
                 <Button transparent light
                   onPress={() => {
-                        if (navigation.getParam('from') === 'AddListScreen') {
-                            navigationService.push('AddItemScreen', {from: 'SubListScreen'});
-                        } else {
+                        if (navigation.getParam('index')) {
                             navigationService.push('AddItemScreen', {from: 'SubListScreen', index: navigation.getParam('index')});
+                        } else {
+                            navigationService.push('AddItemScreen', {from: 'SubListScreen'});
                         }
                   }}
                   title="AddList"
@@ -64,10 +59,10 @@ class SubListScreen extends Component {
     render() {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         let viewList;
-        if (this.props.navigation.getParam('from') === 'AddListScreen') {
-            viewList = this.props.lists[this.props.lists.length - 1].items;
-        } else {
+        if (this.props.navigation.getParam('index')) {
             viewList = this.props.lists[this.props.navigation.getParam('index')].items;
+        } else {
+            viewList = this.props.lists[this.props.lists.length - 1].items;
         }
         return (
             <Container>

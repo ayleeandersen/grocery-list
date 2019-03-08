@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import {
-    TouchableOpacity,
     TextInput,
     View
 } from 'react-native';
@@ -15,14 +14,13 @@ import {
     Container,
     Content,
     Form,
-    Icon,
     Item,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { createNewList, updateListItemAtIndex } from '../redux/actions/actions';
+import { updateListItemAtIndex } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
@@ -83,8 +81,11 @@ class AddItemScreen extends Component {
             alert("Please make sure the item has a name.");
         } else {
             //TODO: save item
-            //TODO: fix this so it goes to subListScreen
-            navigationService.navigate('Home', {from: 'AddListScreen'});
+            if (this.props.navigation.getParam('index')) {
+                navigationService.navigate('SubListScreen', {from: 'AddItemScreen', index: this.props.navigation.getParam('index')});
+            } else {
+                navigationService.navigate('SubListScreen', {from: 'AddItemScreen'});
+            }
         }
     }
 }
