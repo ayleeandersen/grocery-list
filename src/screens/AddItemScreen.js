@@ -50,7 +50,6 @@ class AddItemScreen extends Component {
     }
 
     render() {
-        console.log(this.state.listIndex);
         return (
             <Container>
                 <Content>
@@ -80,7 +79,7 @@ class AddItemScreen extends Component {
         if (this.state.itemText.length === 0) {
             alert("Please make sure the item has a name.");
         } else {
-            //TODO: save item
+            this.props.dispatchUpdateListItemAtIndex(this.state.listIndex, this.props.lists[this.state.listIndex], {item: {name: this.state.itemText, done: false}});
             if (this.props.navigation.getParam('index')) {
                 navigationService.navigate('SubListScreen', {from: 'AddItemScreen', index: this.props.navigation.getParam('index')});
             } else {

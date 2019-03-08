@@ -34,11 +34,15 @@ export function createNewList(name, iconName) {
 }
 
 export function updateListItemAtIndex(index, oldData, newData) {
+    let newItems = store.getState().lists[index].items;
+    if (newData.item) {
+        newItems.push(newData.item);
+    }
     let list = {
-        name: newData.name,
-        icon: newData.icon,
+        name: newData.name ? newData.name : oldData.name,
+        icon: newData.icon ? newData.icon : oldData.icon,
         date: oldData.date,
-        items: oldData.items
+        items: newItems
     }
     let newList = store.getState().lists;
     newList[index] = list;
