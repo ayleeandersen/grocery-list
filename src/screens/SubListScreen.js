@@ -9,7 +9,6 @@ import {
     ListView,
 } from 'react-native';
 import {
-    Body,
     Button,
     CardItem,
     Container,
@@ -18,12 +17,14 @@ import {
     Left,
     List,
     ListItem,
+    Right,
+    Spinner,
     Text,
 } from "native-base";
 import { connect } from 'react-redux';
 
 import navigationService from '../services/NavigationService';
-import { createNewList, updateListItemAtIndex } from '../redux/actions/actions';
+import { toggleDone, updateListItemAtIndex } from '../redux/actions/actions';
 import styles from '../MainStyles';
 
 
@@ -53,32 +54,44 @@ class SubListScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            listIndex: null,
+        }
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     }
 
-    render() {
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        let viewList;
-        if (this.props.navigation.getParam('index')) {
-            viewList = this.props.lists[this.props.navigation.getParam('index')].items;
+    componentDidMount() {
+        if(this.props.navigation.getParam('index')) {
+            this.setState({listIndex: this.props.navigation.getParam('index')});
         } else {
-            viewList = this.props.lists[this.props.lists.length - 1].items;
+            this.setState({listIndex: this.props.lists.length-1});
         }
+    }
+
+    render() {
+        console.log(this.state);
+        if (this.state.listIndex === null) {
+            return <Spinner/>;
+        }
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         return (
             <Container>
                 <Content>
                     <List
                         leftOpenValue={75}
                         rightOpenValue={-75}
-                        dataSource={this.ds.cloneWithRows(viewList)}
+                        dataSource={this.ds.cloneWithRows(this.props.lists[this.state.listIndex].items)}
                         renderRow={(data, secId, rowId) =>
                             <ListItem onPress={() => this.selectRow(data, rowId)}>
-                                <CardItem>
+                                <CardItem style={data.done ? {backgroundColor: '#e3e4e5'} : {}}>
                                     <Left>
-                                        <Body>
-                                            <Text style={styles.listText}>{data.name}</Text>
-                                        </Body>
+                                        <Text style={styles.listText}>{data.name}</Text>
                                     </Left>
+                                    <Right>
+                                        {data.done ? 
+                                        <Icon active style={[styles.listIcon, {color:'green'}]} name="md-checkmark-circle"/> : 
+                                        <Icon active style={styles.listIcon} name="md-checkmark-circle-outline"/>}
+                                    </Right>
                                 </CardItem>
                             </ListItem>
                         }
@@ -99,7 +112,8 @@ class SubListScreen extends Component {
     }
 
     selectRow(data, rowId) {
-        alert("Selected ", rowId);
+        this.props.dispatchToggleDone(this.state.listIndex, rowId);
+        this.forceUpdate();
     }
 
     editRow(data, rowId) {
@@ -119,6 +133,7 @@ class SubListScreen extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchUpdateItem: (key, value) => dispatch(updateItem(key, value)),
+        dispatchToggleDone: (listIndex, itemIndex) => dispatch(toggleDone(listIndex, itemIndex)),
     };
 }
 
