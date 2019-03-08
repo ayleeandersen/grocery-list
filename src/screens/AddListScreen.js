@@ -103,8 +103,17 @@ class AddListScreen extends Component {
                 );
                 navigationService.navigate('Home', {from: 'AddListScreen'});
             } else {
-                this.props.dispatchCreateNewList(this.state.listNameText, this.state.iconName);
-                navigationService.replace('SubListScreen', {from: 'AddListScreen', data: {name: this.state.listNameText, icon: this.state.iconName}});
+                new Promise((resolve, reject) => {
+                    this.props.dispatchCreateNewList(this.state.listNameText, this.state.iconName)
+                    .then(() => {
+                        navigationService.replace('SubListScreen', {from: 'AddListScreen', data: {name: this.state.listNameText, icon: this.state.iconName}});
+                        resolve();
+                    })
+                    .catch((error) => {
+                        console.log("error ", error);
+                        reject(error);
+                    })
+                })
             }
         }
     }
