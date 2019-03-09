@@ -43,7 +43,7 @@ class HomeScreen extends Component {
     }
 
     constructor(props) {
-        alert("Bonus Points\n\n3b (5 pts):\nI let my user include a URL when they add an item.");
+        alert("Bonus Points\n\n3b (5/5 pts):\nI let my user include a URL when they add an item. I think I should get full points for this part, since they can add, edit, or not include an image.\n3a (3/5 pts): \nIf the user doesn't include a URL it defaults to a specific \"no image\" type image. I think I should get 3/5 points for this one since it doesn't search for a unique image for every item. It just defaults.");
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.props.dispatchInitialize();
