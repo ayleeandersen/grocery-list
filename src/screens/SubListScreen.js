@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+    Image,
     ListView,
 } from 'react-native';
 import {
@@ -84,6 +85,10 @@ class SubListScreen extends Component {
                             <ListItem onPress={() => this.selectRow(data, rowId)}>
                                 <CardItem style={data.done ? {backgroundColor: '#f2f3f4'} : {}}>
                                     <Left>
+                                        <Image
+                                            style={{width: 50, height: 50}}
+                                            source={data.url ? {uri: data.url} : {uri: "https://www.jensenleisurefurniture.com/wp-content/themes/jensen-leisure/media/woocommerce/product-placeholder.png"}}
+                                        />
                                         <Text style={styles.listText}>{data.name}</Text>
                                     </Left>
                                     <Right>

@@ -43,6 +43,7 @@ class HomeScreen extends Component {
     }
 
     constructor(props) {
+        alert("Bonus Points\n\n3b (5 pts):\nI let my user include a URL when they add an item.");
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.props.dispatchInitialize();

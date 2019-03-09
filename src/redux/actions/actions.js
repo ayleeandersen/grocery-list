@@ -86,9 +86,10 @@ export function toggleDone(listIndex, itemIndex) {
     })
 }
 
-export function updateItemName(listIndex, itemIndex, newName) {
+export function updateItemNameAndImage(listIndex, itemIndex, newName, newURL) {
     let newList = store.getState().lists;
     newList[listIndex].items[itemIndex].name = newName;
+    newList[listIndex].items[itemIndex].url = newURL;
     return new Promise((resolve, reject) => {
         dataController.addItem('lists', newList)
         .then(() => {
